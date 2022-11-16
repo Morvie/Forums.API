@@ -1,0 +1,12 @@
+D:\Forums.API\ForumsService.Domain\bin\Debug\net6.0\ForumsService.Domain.deps.json
+D:\Forums.API\ForumsService.Domain\bin\Debug\net6.0\ForumsService.Domain.dll
+D:\Forums.API\ForumsService.Domain\bin\Debug\net6.0\ForumsService.Domain.pdb
+D:\Forums.API\ForumsService.Domain\obj\Debug\net6.0\ForumsService.Domain.csproj.AssemblyReference.cache
+D:\Forums.API\ForumsService.Domain\obj\Debug\net6.0\ForumsService.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Forums.API\ForumsService.Domain\obj\Debug\net6.0\ForumsService.Domain.AssemblyInfoInputs.cache
+D:\Forums.API\ForumsService.Domain\obj\Debug\net6.0\ForumsService.Domain.AssemblyInfo.cs
+D:\Forums.API\ForumsService.Domain\obj\Debug\net6.0\ForumsService.Domain.csproj.CoreCompileInputs.cache
+D:\Forums.API\ForumsService.Domain\obj\Debug\net6.0\ForumsService.Domain.dll
+D:\Forums.API\ForumsService.Domain\obj\Debug\net6.0\refint\ForumsService.Domain.dll
+D:\Forums.API\ForumsService.Domain\obj\Debug\net6.0\ForumsService.Domain.pdb
+D:\Forums.API\ForumsService.Domain\obj\Debug\net6.0\ref\ForumsService.Domain.dll
