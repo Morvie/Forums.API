@@ -3,6 +3,7 @@ using ForumsService.Infrastructure.Context;
 using ForumsService.Infrastructure.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using CommandsMediatR = ForumsService.Application.Command;
 using QueriesMediatR = ForumsService.Application.Query;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,11 +18,15 @@ builder.Services.AddSwaggerGen();
 // Dependency injections via MediatR:
 builder.Services.AddMediatR(new Type[]
 {
+    typeof(CommandsMediatR.CreateForum.CreateForumCommand),
+    typeof(CommandsMediatR.UpdateForum.UpdateForumCommand),
+    typeof(CommandsMediatR.DeleteForum.DeleteForumCommand),
     typeof(QueriesMediatR.GetAllForums.GetAllForumsQuery),
     typeof(QueriesMediatR.GetAllForums.GetAllForumsQuery)
 });
 
 // Inject normal dependencies:
+builder.Services.AddScoped<ICommandForumRepository, CommandForumRepository>();
 builder.Services.AddScoped<IQueryForumRepository, QueryForumRepository>();
 
 // Add Entity Framework for SQL to project:

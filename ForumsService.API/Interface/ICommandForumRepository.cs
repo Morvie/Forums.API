@@ -9,8 +9,8 @@ namespace ForumsService.Application.Interface
 {
     public interface ICommandForumRepository
     {
-        Task<ForumsDTO> CreateForum(ForumsDTO forum);
-        Task<ForumsDTO> UpdateForum(ForumsDTO forum);
-        Task DeleteForum(Guid id);
+        Task<ForumsDTO?> CreateForum(ForumsDTO forum);
+        Task<ForumsDTO?> UpdateForum(ForumsDTO forum);
+        Task<ForumsDTO?> DeleteForum(Guid id);
     }
 }

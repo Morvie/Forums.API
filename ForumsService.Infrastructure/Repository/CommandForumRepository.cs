@@ -18,7 +18,7 @@ namespace ForumsService.Infrastructure.Repository
         {
             _context = context;
         }
-        public async Task<ForumsDTO> CreateForum(ForumsDTO forum)
+        public async Task<ForumsDTO>CreateForum(ForumsDTO forum)
         {
             await _context.AddAsync(forum);
             await _context.SaveChangesAsync();
@@ -26,14 +26,29 @@ namespace ForumsService.Infrastructure.Repository
             return forum;
         }
 
-        public Task DeleteForum(Guid id)
+        public async Task<ForumsDTO?>DeleteForum(Guid id)
         {
-            throw new NotImplementedException();
+            var forum = await _context.Forums.FindAsync(id);
+            if (forum == null) return null;
+            await Task.WhenAll(_context.Forums.Where(m => m.Id == id).ExecuteDeleteAsync(), _context.SaveChangesAsync());
+            return forum;
         }
 
-        public Task<ForumsDTO> UpdateForum(ForumsDTO forum)
+        public async Task<ForumsDTO?> UpdateForum(ForumsDTO forum)
         {
-            throw new NotImplementedException();
+            var existing = await _context.Forums.FindAsync(forum.Id);
+            if (existing == null) return null;
+            
+            existing.Title = forum.Title;
+            existing.Description = forum.Description;
+            existing.Amountoflikes = forum.Amountoflikes;
+            existing.MovieId = forum.MovieId;
+            existing.Description = forum.Description;
+            existing.Ownership = forum.Ownership;
+            existing.Reported = forum.Reported;
+
+            await _context.SaveChangesAsync();
+            return existing;
         }
     }
 }
