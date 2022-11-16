@@ -1,0 +1,12 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=<insert docker host>,<port number>; Database=<database>; User Id=<username, usually this is 'SA'>; Password=<Insert docker password here!>; Trust Server Certificate = <Usually True for SSL certificate>;"
+  }, 
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+   }
+  },
+  "AllowedHosts": "*"
+}
