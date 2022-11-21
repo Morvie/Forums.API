@@ -21,6 +21,7 @@ namespace Forums.Controllers
             _mediator = mediator;
         }
 
+        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ForumsViewModel>>> GetAll()
         {

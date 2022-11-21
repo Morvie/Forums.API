@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: forums-api-deployment
+  labels:
+    app: forums-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: forums-api
+  template:
+    metadata:
+      labels:
+        app: forums-api
+    spec:
+      containers:
+        - name: forums-api
+          image: markgoertz/forums:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
