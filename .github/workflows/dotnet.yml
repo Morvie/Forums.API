@@ -25,12 +25,11 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
 
-  test:
     needs: [build]
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: "./Forums.Test"
+        working-directory: "./Forums.test"
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -40,7 +39,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal 
+      run: dotnet test --no-build --verbosity normal
 
   deploy:
     needs: [build, test]
