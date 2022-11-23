@@ -20,8 +20,12 @@ namespace Forums.Controllers
         {
             _mediator = mediator;
         }
+        [HttpGet("/test")]
+        public string TestMethod()
+        {
+            return "Test Alive!";
+        }
 
-        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ForumsViewModel>>> GetAll()
         {
@@ -73,7 +77,7 @@ namespace Forums.Controllers
         [HttpPut]
         public async Task<ActionResult> Update(ForumsViewModel forum)
         {
-            var dto = new ForumsDTO() { Id = forum.Id, Title = forum.Title, Description = forum.Description, Amountoflikes = forum.Amountoflikes, DateOfAdded = forum.Dateofadded, MovieId = forum.MovieId, Ownership = forum.OwnerId, Reported = forum.Reported};
+            var dto = new ForumsDTO() { Id = forum.Id, Title = forum.Title, Description = forum.Description, Amountoflikes = forum.Amountoflikes, DateOfAdded = forum.DateOfAdded, MovieId = forum.MovieId, Ownership = forum.Ownership, Reported = forum.Reported};
             var command = new UpdateForumCommand(dto);
             var response = await _mediator.Send(command);
             if (response == null)
