@@ -14,12 +14,12 @@
 
   <p align="center">
     <br />
-    <a href="https://github.com/BlindDate-Org/S6_Blind_Date_Platform/tree/main/documentation"><strong>Explore the docs »</strong></a>
+    <a href=""><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="">View Demo</a>
     ·
-    <a href="https://github.com/BlindDate-Org/S6_Blind_Date_Platform/issues">Report Bug</a>
+    <a href="https://github.com/Morvie/Forums.API/issues">Report Bug</a>
     
   </p>
 </div>
