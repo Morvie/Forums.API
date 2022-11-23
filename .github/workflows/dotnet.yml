@@ -25,11 +25,12 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
 
+  test:
     needs: [build]
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: "./Forums.test"
+        working-directory: "./Forums.Test"
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
