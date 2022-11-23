@@ -21,6 +21,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\Forums.Test\Forums.Test.csproj" />
 	  <ProjectReference Include="..\ForumsService.API\ForumsService.Application.csproj" />
 	  <ProjectReference Include="..\ForumsService.Infrastructure\ForumsService.Infrastructure.csproj" />
 	</ItemGroup>

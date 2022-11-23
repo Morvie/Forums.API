@@ -10,6 +10,6 @@ namespace ForumsService.Application.Interface
     public interface IQueryForumRepository
     {
         Task<IEnumerable<ForumsDTO>> GetAll();
-        Task<ForumsDTO?> Get(Guid id);
+        Task<ForumsDTO> Get(Guid id);
     }
 }
