@@ -28,6 +28,9 @@ jobs:
   test:
     needs: [build]
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: "./Forums.Test"
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -37,10 +40,9 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Test
-      run: dotnet test .\Forums.Test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+      run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
     - name: Codecov
       uses: codecov/codecov-action@v3.1.1
-
 
   deploy:
     needs: [build, test]
