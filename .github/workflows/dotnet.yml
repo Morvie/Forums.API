@@ -50,7 +50,7 @@ jobs:
       with: 
         name: Forums.Tests
         flags: automated
-        token: ${{ secrets.CODECOV_TOKJEN }}
+        token: ${{ secrets.CODECOV_TOKEN }}
         files: coverage-results/**/*.xml
 
   deploy:
