@@ -22,11 +22,11 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Upload build Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: Artifact for Build job results
-          path: output/
-          retention-days: 7
+      uses: actions/upload-artifact@v3
+      with:
+        name: Artifact for Build job results
+        path: output/
+        retention-days: 7
   
   test:
     needs: [build]
