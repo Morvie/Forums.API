@@ -21,7 +21,7 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
-
+  
   test:
     needs: [build]
     runs-on: ubuntu-latest
@@ -41,14 +41,24 @@ jobs:
       run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true
     - name: Test
       run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=TestResult/
-      
-    - name: Upload coverage reports to Codecov
+    - uses: actions/upload-artifacts@v2
+      with:
+        name: backend-coverage
+        path: coverage.opencover.xml
+  
+  upload-to-codecov:
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Download artifacts
+        uses: actions/download-artifacts@v2
+      - name: Upload to Codecov
       uses: codecov/codecov-action@v1
       with: 
-        name: Forums.Tests
-        flags: automated
         token: ${{ secrets.CODECOV_TOKEN }}
-        files: coverage/**/*.xml
+
 
   deploy:
     needs: [build, test]
