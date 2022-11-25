@@ -49,7 +49,7 @@ jobs:
       - name: ReportGenerator
         uses: danielpalme/ReportGenerator-GitHub-Action@5
         with:
-          reports: 'Tests/TestResults/**/coverage.cobertura.xml'
+          reports: 'Forums.Test/TestResults/**/coverage.cobertura.xml'
           targetdir: 'CoverageReports'
           reporttypes: 'HtmlInline;Cobertura'
           verbosity: 'Verbose'
@@ -59,14 +59,6 @@ jobs:
         with:
           name: CoverageReports        
           path: CoverageReports
-
-      - name: List files
-        run: cd CoverageReports && ls && cd ..
-      - name: Upload Artifact Codecov
-        uses: actions/upload-artifact@v3
-        with:
-          name: Artifact for Codecov Code coverage
-          path: Forums.Test/coverage
   
   upload-to-codecov:
     needs: [test]
@@ -76,6 +68,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Download artifacts
         uses: actions/download-artifact@v3
+      - name: List files
+        run: cd CoverageReports && ls && cd ..
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
