@@ -46,7 +46,6 @@ jobs:
       uses: codecov/codecov-action@v1.5.2
 
     - name: Upload coverage reports to Codecov
-      uses: actions/checkout@master
       uses: codecov/codecov-action@v1
       run: |
         curl -Os https://uploader.codecov.io/latest/windows/codecov
