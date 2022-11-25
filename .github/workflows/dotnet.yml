@@ -45,12 +45,12 @@ jobs:
       - name: Build
         run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true
       - name: Test
-        run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=Coverage/
+        run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=coverage/
       - name: Upload Artifact Codecov
         uses: actions/upload-artifact@v3
         with:
           name: Artifact for Codecov Code coverage
-          path: Forums.Test/Coverage/coverage.opencover.xml
+          path: Forums.Test/coverage/*.xml
   
   upload-to-codecov:
     needs: [test]
@@ -65,7 +65,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: backend
-          
+          files:
 
   deploy:
     needs: [build, test]
