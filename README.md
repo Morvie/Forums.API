@@ -1,3 +1,8 @@
+[![GitHub contributors](https://badgen.net/github/contributors/Naereen/Strapdown.js)](https://github.com/Morvie/Forums.API/graphs/contributors)
+[![GitHub forks](https://img.shields.io/github/forks/Naereen/StrapDown.js.svg?style=social&label=Fork&maxAge=2592000)](https://github.com/Morvie/Forums.API/network/members)
+[![Sparkline](https://stars.medv.io/Naereen/badges.svg)][(https://github.com/Morvie/Forums.API/stargazers)]
+[![GitHub issues](https://img.shields.io/github/issues/Naereen/StrapDown.js.svg)](https://github.com/Morvie/Forums.API/issues)
+[![codecov](https://codecov.io/github/Morvie/Forums.API/branch/main/graph/badge.svg?token=H2BHSLG6HZ)](https://codecov.io/github/Morvie/Forums.API)
 
 ---
 
