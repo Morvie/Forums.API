@@ -41,7 +41,8 @@ jobs:
       run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true
     - name: Test
       run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=TestResult/
-    - uses: actions/upload-artifacts@v3
+    - name: Archive code coverage results
+      uses: actions/upload-artifacts@v3
       with:
         name: backend-coverage
         path: coverage.opencover.xml
