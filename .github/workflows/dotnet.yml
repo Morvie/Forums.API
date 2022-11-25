@@ -41,7 +41,7 @@ jobs:
       run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true
     - name: Test
       run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=TestResult/
-    - uses: actions/upload-artifacts@v2
+    - uses: actions/upload-artifacts@v3
       with:
         name: backend-coverage
         path: coverage.opencover.xml
@@ -51,11 +51,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Download artifacts
-      uses: actions/download-artifacts@v2
+      uses: actions/download-artifacts@v3
     - name: Upload to Codecov
-      uses: codecov/codecov-action@v1
+      uses: codecov/codecov-action@v3
       with: 
         token: ${{ secrets.CODECOV_TOKEN }}
 
