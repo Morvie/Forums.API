@@ -58,7 +58,7 @@ Forums API is a microservice of the Morvie product. This project was made during
       <a href="https://github.com/Morvie/Forums.API/network/members"><img src="https://img.shields.io/github/forks/Morvie/Forums.API.svg?style=social&label=Fork&maxAge=2592000"/></a> 
     </td>
    <td>
-      <a href="https://img.shields.io/github/issues/Morvie/Forums.API.svg"><img src="https://img.shields.io/github/issues/Morvie/Forums.API.svg"/></a> 
+      <a href="https://github.com/Morvie/Forums.API/issues"><img src="https://img.shields.io/github/issues/Morvie/Forums.API.svg"/></a> 
     </td>
   </tr>
 </table>
