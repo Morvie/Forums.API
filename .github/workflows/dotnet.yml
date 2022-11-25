@@ -29,38 +29,35 @@ jobs:
       run:
         working-directory: "./Forums.Test"
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true
-    - name: Test
-      run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=TestResult/
-    - name: Upload Artifact Codecov
-      uses: actions/upload-artifact@v3
-      with:
-        name: frontend-coverage
-        path: Forums.Test/coverage.opencover.xml
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true
+      - name: Test
+        run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=TestResult/
+      - name: Upload Artifact Codecov
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend-coverage
+          path: Forums.Test/coverage.opencover.xml
   
   upload-to-codecov:
     needs: [test]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - name: Download Codecov artifacts
-        uses: actions/download-artifacts@v3
+        uses: actions/checkout@v2
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
       - name: Upload to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v1
         with: 
           token: ${{ secrets.CODECOV_TOKEN }}
-
-    
-
 
   deploy:
     needs: [build, test]
