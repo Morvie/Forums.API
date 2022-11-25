@@ -40,22 +40,29 @@ jobs:
     - name: Build
       run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true
 
-     # Add coverlet.collector nuget package to test project - 'dotnet add <TestProject.cspoj> package coverlet.collector'
-    - task: DotNetCoreCLI@2
-      displayName: dotnet test
-      inputs:
-        command: 'test'
-        projects: '**/*.Tests.csproj'
-        arguments: '--configuration $(buildConfiguration) --collect:"XPlat Code Coverage"'
-        publishTestResults: true
+    - name: Test
+      run: dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage" --logger trx --results-directory coverage
+      
+    - name: Copy Coverage to Predictable Location
+      run: cp coverage/*/coverage.cobertura.xml coverage/coverage.cobertura.xml
 
-    # Publish code coverage report to the pipeline
-    - task: PublishCodeCoverageResults@1
-      displayName: 'Publish code coverage'
-      inputs:
-        codeCoverageTool: Cobertura
-        summaryFileLocation: $(Agent.TempDirectory)/*/coverage.cobertura.xml # using ** instead of * finds duplicate coverage files
+    - name: Code Coverage Summary Report
+      uses: irongut/CodeCoverageSummary@v1.3.0
+      with:
+        filename: coverage/coverage.cobertura.xml
+        badge: true
+        format: 'markdown'
+        output: 'both'
 
+    - name: Add Coverage PR Comment
+      uses: marocchino/sticky-pull-request-comment@v2
+      if: github.event_name == 'pull_request'
+      with:
+        recreate: true
+        path: code-coverage-results.md
+
+    - name: Write to Job Summary
+      run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
 
 
   deploy:
