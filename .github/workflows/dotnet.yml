@@ -50,14 +50,16 @@ jobs:
     needs: [test]
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Download artifacts
-      uses: actions/download-artifacts@v3
-    - name: Upload to Codecov
-      uses: codecov/codecov-action@v3
-      with: 
-        token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Download Codecov artifacts
+        uses: actions/download-artifacts@v3
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v3
+        with: 
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+    
 
 
   deploy:
