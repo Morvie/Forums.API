@@ -44,13 +44,17 @@ Forums API is a microservice of the Morvie product. This project was made during
 <br/>
 <table align="center" class="no-border" >
   <tr>
-    <td><img src="https://github.com/Morvie/Forums.API/actions/workflows/dotnet.yml/badge.svg" alt="C# health"/></td>
+    <td>
+      <img src="https://github.com/Morvie/Forums.API/actions/workflows/dotnet.yml/badge.svg" alt="C# health"/></td>
+    <td>
+      <a href="https://codecov.io/gh/Morvie/Forums.API" >
+      <img src="https://codecov.io/gh/Morvie/Forums.API/branch/main/graph/badge.svg?token=H2BHSLG6HZ"/></a> 
+    </td>
   </tr>
 </table>
 <br/>
 
 ---
-
 
 ### :hammer_and_wrench: Languages and Tools :
 

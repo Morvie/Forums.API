@@ -42,16 +42,13 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=TestResult/
       
-    - name: Codecov
-      uses: codecov/codecov-action@v1.5.2
-
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v1
       with: 
         name: Forums.Tests
         flags: automated
         token: ${{ secrets.CODECOV_TOKEN }}
-        files: coverage-results/**/*.xml
+        files: coverage/**/*.xml
 
   deploy:
     needs: [build, test]
