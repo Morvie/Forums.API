@@ -39,28 +39,23 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true
-    - name: Test
-      run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-    - name: Codecov
-      uses: codecov/codecov-action@v1
-    
-    - name: Code Coverage Summary Report
-      uses: irongut/CodeCoverageSummary@v1.3.0
-      with:
-        filename: coverage.opencover.xml
-        badge: true
-        format: 'markdown'
-        output: 'both'
 
-    - name: Add Coverage PR Comment
-      uses: marocchino/sticky-pull-request-comment@v2
-      if: github.event_name == 'pull_request'
-      with:
-        recreate: true
-        path: code-coverage-results.md
+     # Add coverlet.collector nuget package to test project - 'dotnet add <TestProject.cspoj> package coverlet.collector'
+    - task: DotNetCoreCLI@2
+      displayName: dotnet test
+      inputs:
+        command: 'test'
+        projects: '**/*.Tests.csproj'
+        arguments: '--configuration $(buildConfiguration) --collect:"XPlat Code Coverage"'
+        publishTestResults: true
 
-    - name: Write to Job Summary
-      run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
+    # Publish code coverage report to the pipeline
+    - task: PublishCodeCoverageResults@1
+      displayName: 'Publish code coverage'
+      inputs:
+        codeCoverageTool: Cobertura
+        summaryFileLocation: $(Agent.TempDirectory)/*/coverage.cobertura.xml # using ** instead of * finds duplicate coverage files
+
 
 
   deploy:
