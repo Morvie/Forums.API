@@ -1,8 +1,4 @@
-[![GitHub contributors](https://badgen.net/github/contributors/Naereen/Strapdown.js)](https://github.com/Morvie/Forums.API/graphs/contributors)
-[![GitHub forks](https://img.shields.io/github/forks/Naereen/StrapDown.js.svg?style=social&label=Fork&maxAge=2592000)](https://github.com/Morvie/Forums.API/network/members)
-[![Sparkline](https://stars.medv.io/Naereen/badges.svg)][(https://github.com/Morvie/Forums.API/stargazers)]
-[![GitHub issues](https://img.shields.io/github/issues/Naereen/StrapDown.js.svg)](https://github.com/Morvie/Forums.API/issues)
-[![codecov](https://codecov.io/github/Morvie/Forums.API/branch/main/graph/badge.svg?token=H2BHSLG6HZ)](https://codecov.io/github/Morvie/Forums.API)
+
 
 ---
 
@@ -54,6 +50,15 @@ Forums API is a microservice of the Morvie product. This project was made during
     <td>
       <a href="https://codecov.io/gh/Morvie/Forums.API" >
       <img src="https://codecov.io/gh/Morvie/Forums.API/branch/main/graph/badge.svg?token=H2BHSLG6HZ"/></a> 
+    </td>
+        <td>
+      <a href="https://github.com/Morvie/Forums.API/pulls"><img src="https://img.shields.io/github/issues-pr/Morvie/Forums.API.svg"/></a> 
+    </td>
+    <td>
+      <a href="https://github.com/Morvie/Forums.API/network/members"><img src="https://img.shields.io/github/forks/Morvie/Forums.API.svg?style=social&label=Fork&maxAge=2592000"/></a> 
+    </td>
+   <td>
+      <a href="https://img.shields.io/github/issues/Morvie/Forums.API.svg"><img src="https://img.shields.io/github/issues/Morvie/Forums.API.svg"/></a> 
     </td>
   </tr>
 </table>
