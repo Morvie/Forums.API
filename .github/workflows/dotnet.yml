@@ -53,7 +53,7 @@ jobs:
           targetdir: 'CoverageReports'
           reporttypes: 'HtmlInline;Cobertura'
           verbosity: 'Verbose'
-        toolpath: 'reportgeneratortool'
+          toolpath: 'reportgeneratortool'
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
@@ -84,7 +84,7 @@ jobs:
           name: codecov-umbrella
           fail_ci_if_error: true
           verbose: true
-          
+
   deploy:
     needs: [build, test]
     runs-on: ubuntu-latest    
