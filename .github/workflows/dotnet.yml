@@ -40,11 +40,11 @@ jobs:
       run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true
     - name: Test
       run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=TestResult/
-    - name: Archive code coverage results
-      uses: actions/upload-artifacts@v3
+    - name: Upload Artifact Codecov
+      uses: actions/upload-artifact@v3
       with:
-        name: backend-coverage
-        path: Forums.Test\coverage.opencover.xml
+        name: frontend-coverage
+        path: Forums.Test/coverage.opencover.xml
   
   upload-to-codecov:
     needs: [test]
