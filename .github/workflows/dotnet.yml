@@ -50,7 +50,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Artifact for Codecov Code coverage
-          path: Forum.Test/**
+          path: Forums.API/Forum.Test/coverage.opencover.xml
   
   upload-to-codecov:
     needs: [test]
