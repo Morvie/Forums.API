@@ -10,6 +10,7 @@
   </PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="MassTransit.RabbitMQ" Version="8.0.8" />
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjectionFixed" Version="5.1.2" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0" />
@@ -21,7 +22,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Forums.Test\Forums.Test.csproj" />
 	  <ProjectReference Include="..\ForumsService.API\ForumsService.Application.csproj" />
 	  <ProjectReference Include="..\ForumsService.Infrastructure\ForumsService.Infrastructure.csproj" />
 	</ItemGroup>

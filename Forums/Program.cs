@@ -3,8 +3,12 @@ using ForumsService.Infrastructure.Context;
 using ForumsService.Infrastructure.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using CommandsMediatR = ForumsService.Application.Command;
 using QueriesMediatR = ForumsService.Application.Query;
+using MassTransit;
+using ForumsService.Application.Consumer;
+using MassTransit.DependencyInjection.Registration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +39,29 @@ builder.Services.AddDbContext<ForumDbContext>(options => options.UseSqlServer(co
     b => b.MigrationsAssembly("Forums").EnableRetryOnFailure())
 );
 
+//RabbitMQ 
+builder.Services.AddMassTransit(config => 
+{
+    config.AddConsumer<FeedConsumer>();
+    config.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
+    {
+        cfg.Host(new Uri("rabbitmq://" + builder.Configuration.GetValue<string>("RabbitMQ:QueueSettings:HostName")), h =>
+        {
+            h.Username(builder.Configuration.GetValue<string>("RabbitMQ:QueueSettings:UserName"));
+            h.Password(builder.Configuration.GetValue<string>("RabbitMQ:QueueSettings:Password"));
+        });
+        cfg.ReceiveEndpoint("Feed-POST", ep =>
+        {
+            ep.PrefetchCount = 16;
+            ep.UseMessageRetry(r => r.Interval(2, 100));
+            ep.ConfigureConsumer<FeedConsumer>(provider);
+        });
+    }));
+});
+
+builder.Services.AddMassTransitHostedService();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -51,5 +78,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
 
 public partial class Program { }
