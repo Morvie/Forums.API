@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace ForumsService.Application.Query.GetAllForums
 {
-    public class GetAllForumsHandler : IRequestHandler<GetAllForumsQuery, IEnumerable<ForumsDTO>>
+    public class CreateForumHandler : IRequestHandler<GetAllForumsQuery, IEnumerable<ForumsDTO>>
     {
         private readonly IQueryForumRepository _repository;
-        public GetAllForumsHandler(IQueryForumRepository repository)
+        public CreateForumHandler(IQueryForumRepository repository)
         {
             _repository = repository;
         }

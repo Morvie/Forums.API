@@ -5,6 +5,13 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using CommandsMediatR = ForumsService.Application.Command;
 using QueriesMediatR = ForumsService.Application.Query;
+using ForumsService.Application.Consumer;
+using ForumsService.Application.Worker;
+using MassTransit;
+using Microsoft.Extensions.Configuration;
+using Forums.Models;
+using System.Diagnostics;
+using FeedMessages.Application.Notifications;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +42,27 @@ builder.Services.AddDbContext<ForumDbContext>(options => options.UseSqlServer(co
     b => b.MigrationsAssembly("Forums").EnableRetryOnFailure())
 );
 
+
+//RabbitMQ 
+var rabbitMqSettings = builder.Configuration.GetSection(nameof(RabbitMqSettings)).Get<RabbitMqSettings>();
+
+
+builder.Services.AddMassTransit(config =>
+{
+    config.UsingRabbitMq((cxt, cfg) =>
+    {
+        cfg.Host(rabbitMqSettings.Uri, "/", c =>
+        {
+            c.Username(rabbitMqSettings.UserName);
+            c.Password(rabbitMqSettings.Password);
+        });
+        cfg.ReceiveEndpoint("feed_service", (c) =>
+        {
+            c.Consumer<CommandMessageConsumer>();
+        });
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -49,7 +77,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
 app.Run();
+
 
 public partial class Program { }

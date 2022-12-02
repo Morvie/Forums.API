@@ -17,7 +17,7 @@ namespace Forums.Test.UnitTest
         public async Task GetAllForums()
         {
             //Arrange
-            var handler = new GetAllForumsHandler(_mockRepo.Object);
+            var handler = new CreateForumHandler(_mockRepo.Object);
 
             //Act
             var result = await handler.Handle(new GetAllForumsQuery(), CancellationToken.None);

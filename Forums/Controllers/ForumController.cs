@@ -56,18 +56,9 @@ namespace Forums.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(POSTViewModel forumViewModel)
+        public async Task<ActionResult> Create(CreateForumCommand cmd)
         {
-            var command = new CreateForumCommand(
-                forumViewModel.Title,
-                forumViewModel.Description,
-                forumViewModel.OwnerId,
-                forumViewModel.Dateofadded,
-                forumViewModel.Reported, 
-                forumViewModel.Amountoflikes,
-                forumViewModel.MovieId
-            );
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(cmd);
 
             if (result == null) return BadRequest();
 

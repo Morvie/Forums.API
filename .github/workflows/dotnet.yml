@@ -25,7 +25,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Artifact for Build job results
-        path: ./build
+        path: bin/ 
         retention-days: 7
   
   test:
