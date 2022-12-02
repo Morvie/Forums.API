@@ -3,12 +3,15 @@ using ForumsService.Infrastructure.Context;
 using ForumsService.Infrastructure.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using CommandsMediatR = ForumsService.Application.Command;
 using QueriesMediatR = ForumsService.Application.Query;
-using MassTransit;
 using ForumsService.Application.Consumer;
-using MassTransit.DependencyInjection.Registration;
+using ForumsService.Application.Worker;
+using MassTransit;
+using Microsoft.Extensions.Configuration;
+using Forums.Models;
+using System.Diagnostics;
+using FeedMessages.Application.Notifications;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,28 +42,26 @@ builder.Services.AddDbContext<ForumDbContext>(options => options.UseSqlServer(co
     b => b.MigrationsAssembly("Forums").EnableRetryOnFailure())
 );
 
+
 //RabbitMQ 
-builder.Services.AddMassTransit(config => 
+var rabbitMqSettings = builder.Configuration.GetSection(nameof(RabbitMqSettings)).Get<RabbitMqSettings>();
+
+
+builder.Services.AddMassTransit(config =>
 {
-    config.AddConsumer<FeedConsumer>();
-    config.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
+    config.UsingRabbitMq((cxt, cfg) =>
     {
-        cfg.Host(new Uri("rabbitmq://" + builder.Configuration.GetValue<string>("RabbitMQ:QueueSettings:HostName")), h =>
+        cfg.Host(rabbitMqSettings.Uri, "/", c =>
         {
-            h.Username(builder.Configuration.GetValue<string>("RabbitMQ:QueueSettings:UserName"));
-            h.Password(builder.Configuration.GetValue<string>("RabbitMQ:QueueSettings:Password"));
+            c.Username(rabbitMqSettings.UserName);
+            c.Password(rabbitMqSettings.Password);
         });
-        cfg.ReceiveEndpoint("Feed-POST", ep =>
+        cfg.ReceiveEndpoint("feed_service", (c) =>
         {
-            ep.PrefetchCount = 16;
-            ep.UseMessageRetry(r => r.Interval(2, 100));
-            ep.ConfigureConsumer<FeedConsumer>(provider);
+            c.Consumer<CommandMessageConsumer>();
         });
-    }));
+    });
 });
-
-builder.Services.AddMassTransitHostedService();
-
 
 var app = builder.Build();
 
@@ -76,7 +77,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
 app.Run();
 
 
