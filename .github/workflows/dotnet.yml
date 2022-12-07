@@ -102,7 +102,7 @@ jobs:
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/forums:latest
     
   deploy-to-minikube:
-    needs:  [DockerHub-actions]
+    needs:  [Docker]
     runs-on: ubuntu-latest
     name: build and deploy to minikube
     steps:
