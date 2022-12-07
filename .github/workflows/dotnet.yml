@@ -120,11 +120,7 @@ jobs:
         docker images        
     - name: Deploy to minikube
       run:
-        kubectl apply -f k8s/deploy-to-minikube.yaml
-    - name: Tunneling 
-      run: |
-        minikube tunnel
-    
+        kubectl apply -f k8s/deploy-to-minikube.yaml    
     - name: Test service URLs
       run: |
         minikube service list
