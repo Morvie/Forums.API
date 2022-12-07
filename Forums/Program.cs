@@ -5,12 +5,8 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using CommandsMediatR = ForumsService.Application.Command;
 using QueriesMediatR = ForumsService.Application.Query;
-using ForumsService.Application.Consumer;
-using ForumsService.Application.Worker;
 using MassTransit;
-using Microsoft.Extensions.Configuration;
 using Forums.Models;
-using System.Diagnostics;
 using FeedMessages.Application.Notifications;
 
 var builder = WebApplication.CreateBuilder(args);

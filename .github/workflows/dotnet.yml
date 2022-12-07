@@ -79,7 +79,7 @@ jobs:
           fail_ci_if_error: true
           verbose: true
 
-  deploy:
+  build and push to DockerHub:
     needs: [build, test]
     runs-on: ubuntu-latest    
     steps:
@@ -99,3 +99,30 @@ jobs:
           file: ./Forums/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/forums:latest
+    
+  deploy to minikube:
+    needs:  [build and test to DockerHub]
+    runs-on: ubuntu-latest
+    name: build example and deploy to minikube
+    steps:
+    - uses: actions/checkout@v2
+    - name: Start minikube
+      uses: medyagh/setup-minikube@master
+    - name: Try the cluster !
+      run: kubectl get pods -A
+    - name: Build image
+      run: |
+        export SHELL=/bin/bash
+        eval $(minikube -p minikube docker-env)
+        docker build -f ./Forums/Dockerfile -t markgoertz/forums .
+        echo -n "verifying images:"
+        docker images        
+    - name: Deploy to minikube
+      run:
+        kubectl apply -f deploy-to-minikube.yaml
+    - name: Test service URLs
+      run: |
+        minikube service list
+        minikube service example --url
+        echo "------------------opening the service------------------"
+        curl $(minikube service example --url)   
