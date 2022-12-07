@@ -6,82 +6,82 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: "./Forums"
-    steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Upload build Artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: Artifact for Build job results
-        path: bin/ 
-        retention-days: 7
+  # build:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: "./Forums"
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #   - name: Setup .NET
+  #     uses: actions/setup-dotnet@v3
+  #     with:
+  #       dotnet-version: 6.0.x
+  #   - name: Restore dependencies
+  #     run: dotnet restore
+  #   - name: Build
+  #     run: dotnet build --no-restore
+  #   - name: Upload build Artifact
+  #     uses: actions/upload-artifact@v3
+  #     with:
+  #       name: Artifact for Build job results
+  #       path: bin/ 
+  #       retention-days: 7
   
-  test:
-    needs: [build]
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: "./Forums.Test"
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: 6.0.x
-      - name: Restore dependencies
-        run: dotnet restore
-      - name: Build
-        run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true
-      - name: Run tests with coverage
-        run: dotnet test --no-build --collect:"XPlat Code Coverage"
-      - name: ReportGenerator
-        uses: danielpalme/ReportGenerator-GitHub-Action@5
-        with:
-          reports: 'Forums.Test/TestResults/**/coverage.cobertura.xml'
-          targetdir: 'CoverageReports'
-          reporttypes: 'HtmlInline;Cobertura'
-          verbosity: 'Verbose'
-          toolpath: 'reportgeneratortool'
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: CoverageReports        
-          path: CoverageReports
+  # test:
+  #   needs: [build]
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: "./Forums.Test"
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Setup .NET
+  #       uses: actions/setup-dotnet@v3
+  #       with:
+  #         dotnet-version: 6.0.x
+  #     - name: Restore dependencies
+  #       run: dotnet restore
+  #     - name: Build
+  #       run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true
+  #     - name: Run tests with coverage
+  #       run: dotnet test --no-build --collect:"XPlat Code Coverage"
+  #     - name: ReportGenerator
+  #       uses: danielpalme/ReportGenerator-GitHub-Action@5
+  #       with:
+  #         reports: 'Forums.Test/TestResults/**/coverage.cobertura.xml'
+  #         targetdir: 'CoverageReports'
+  #         reporttypes: 'HtmlInline;Cobertura'
+  #         verbosity: 'Verbose'
+  #         toolpath: 'reportgeneratortool'
+  #     - name: Upload artifact
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: CoverageReports        
+  #         path: CoverageReports
   
-  upload-to-codecov:
-    needs: [test]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Download artifacts
-        uses: actions/download-artifact@v3
-      - name: List files
-        run: cd CoverageReports && ls && cd ..
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: CoverageReports/Cobertura.xml
-          name: codecov-umbrella
-          fail_ci_if_error: true
-          verbose: true
+  # upload-to-codecov:
+  #   needs: [test]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+  #     - name: Download artifacts
+  #       uses: actions/download-artifact@v3
+  #     - name: List files
+  #       run: cd CoverageReports && ls && cd ..
+  #     - name: Upload coverage to Codecov
+  #       uses: codecov/codecov-action@v2
+  #       with:
+  #         token: ${{ secrets.CODECOV_TOKEN }}
+  #         files: CoverageReports/Cobertura.xml
+  #         name: codecov-umbrella
+  #         fail_ci_if_error: true
+  #         verbose: true
 
   Docker:
     name: builds and deploy to DockerHub
-    needs: [build, test]
+    # needs: [build, test]
     runs-on: ubuntu-latest    
     steps:
       - name: Checkout
@@ -123,6 +123,7 @@ jobs:
         kubectl apply -f k8s/deploy-to-minikube.yaml
     - name: Test service URLs
       run: |
+        minikube tunnel
         minikube service list
         minikube service forums --url
         echo "------------------opening the service------------------"
