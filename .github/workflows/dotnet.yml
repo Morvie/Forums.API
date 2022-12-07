@@ -102,9 +102,8 @@ jobs:
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/forums:latest
     
   deploy-to-minikube:
-    needs:  [Docker]
     runs-on: ubuntu-latest
-    name: build and deploy to minikube
+    name: build example and deploy to minikube
     steps:
     - uses: actions/checkout@v2
     - name: Start minikube
@@ -115,15 +114,15 @@ jobs:
       run: |
         export SHELL=/bin/bash
         eval $(minikube -p minikube docker-env)
-        docker build -f ./Forums/Dockerfile -t markgoertz/forums .
+        docker build -f ./Dockerfile -t local/example .
         echo -n "verifying images:"
         docker images        
     - name: Deploy to minikube
       run:
-        kubectl apply -f k8s/deploy-to-minikube.yaml    
+        kubectl apply -f deploy-to-minikube.yaml
     - name: Test service URLs
       run: |
         minikube service list
-        minikube service forums --url
+        minikube service example --url
         echo "------------------opening the service------------------"
-        curl $(minikube service forums --url)   
+        curl $(minikube service example --url)        
