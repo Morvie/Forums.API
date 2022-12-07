@@ -100,7 +100,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/forums:latest
     
-  deploy to minikube:
+  deploy-to-minikube:
     needs:  [DockerHub-actions]
     runs-on: ubuntu-latest
     name: build example and deploy to minikube
