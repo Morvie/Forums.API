@@ -31,7 +31,7 @@ kind: Service
 metadata:
     name: forums
 spec:
-    type: NodePort
+    type: LoadBalancer
     selector:
         app: forums
     ports:
