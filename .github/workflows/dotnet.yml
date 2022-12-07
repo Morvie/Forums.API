@@ -79,7 +79,7 @@ jobs:
           fail_ci_if_error: true
           verbose: true
 
-  build and push to DockerHub:
+  DockerHub-actions:
     needs: [build, test]
     runs-on: ubuntu-latest    
     steps:
@@ -101,7 +101,7 @@ jobs:
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/forums:latest
     
   deploy to minikube:
-    needs:  [build and test to DockerHub]
+    needs:  [DockerHub-actions]
     runs-on: ubuntu-latest
     name: build example and deploy to minikube
     steps:
