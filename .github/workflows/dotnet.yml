@@ -121,9 +121,12 @@ jobs:
     - name: Deploy to minikube
       run:
         kubectl apply -f k8s/deploy-to-minikube.yaml
-    - name: Test service URLs
+    - name: Tunneling 
       run: |
         minikube tunnel
+    
+    - name: Test service URLs
+      run: |
         minikube service list
         minikube service forums --url
         echo "------------------opening the service------------------"
